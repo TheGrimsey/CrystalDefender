@@ -51,6 +51,8 @@ public class MovementComponent : MonoBehaviour
                     TryToMove(movementDistance);
                 }
             }
+
+            _statsComponent.FaceDirection = MovementInput;
         }
     }
     

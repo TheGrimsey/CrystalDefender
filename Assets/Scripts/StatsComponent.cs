@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class StatsComponent : MonoBehaviour
 {
@@ -7,6 +8,31 @@ public class StatsComponent : MonoBehaviour
 
     public delegate void OnHealtChangedDelegate(int newHealth);
     public event OnHealtChangedDelegate OnHealthChanged;
+
+    //Keep track of which direction we are facing.
+    [SerializeField]
+    Vector2 _faceDirection;
+    public Vector2 FaceDirection
+    {
+        get { return _faceDirection; }
+        set 
+        {
+            Vector2 newValue = value;
+
+            if (Math.Abs(newValue.y) > Math.Abs(newValue.x))
+            {
+                newValue.x = 0;
+                newValue.Normalize();
+            } 
+            else
+            {
+                newValue.y = 0;
+                newValue.Normalize();
+            }
+
+            _faceDirection = newValue; 
+        }
+    }
 
     //Current Health
     [SerializeField]

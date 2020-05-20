@@ -31,10 +31,13 @@ public class AI : MonoBehaviour
     {
         _gameKeeper = GameKeeper.Get();
 
+        //Cache our statsComponent & register damaged event.
         _statsComponent = GetComponent<StatsComponent>();
         _statsComponent.OnDamaged += OnDamaged;
 
+        //Set up NavMesh agent.
         _navMeshAgent = GetComponent<NavMeshAgent>();
+        //Set this so we don't rotate.
         _navMeshAgent.updateRotation = false;
         _navMeshAgent.updateUpAxis = false;
 
@@ -42,7 +45,9 @@ public class AI : MonoBehaviour
         _navMeshAgent.stoppingDistance = _statsComponent.AttackReach * 0.9f;
 
         Threat = new List<ThreatTarget>();
-        Threat.Add(new ThreatTarget(100f, _gameKeeper.Crystal));
+
+        //Add default threat to Crystal so enemies have somewhere they want to go from the start.
+        Threat.Add(new ThreatTarget(1f, _gameKeeper.Crystal));
     }
 
     // Update is called once per frame
@@ -55,6 +60,10 @@ public class AI : MonoBehaviour
 
         //Go to Threat target.
         _navMeshAgent.SetDestination(Target.transform.position);
+
+        Vector2 direction = (_navMeshAgent.pathEndPosition - transform.position);
+        Vector2 faceDirection = new Vector2(direction.x, direction.y).normalized;
+        _statsComponent.FaceDirection = faceDirection;
     }
     
     GameObject GetTarget()
@@ -92,6 +101,9 @@ public class AI : MonoBehaviour
 
     void OnDamaged(int Damage, GameObject Damager)
     {
+        if (Damager == null)
+            return;
+
         AddThreat(Damage, Damager);
     }
 }
