@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(StatsComponent))]
 [RequireComponent(typeof(CircleCollider2D))]
@@ -12,7 +11,12 @@ public class MovementComponent : MonoBehaviour
     CircleCollider2D _circleCollider2D;
 
     [SerializeField]
-    Vector2 MovementInput;
+    Vector2 _movementInput;
+    public Vector2 MovementInput
+    {
+        get { return _movementInput.normalized; }
+        set { _movementInput = value; }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -68,12 +72,5 @@ public class MovementComponent : MonoBehaviour
         }
 
         return false;
-    }
-
-    //Called when player presses any of the move keys.
-    public void Move(InputAction.CallbackContext context)
-    {
-        //Save input value to MovementInput.
-        MovementInput = context.ReadValue<Vector2>();
     }
 }

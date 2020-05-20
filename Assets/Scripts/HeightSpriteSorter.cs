@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UIElements;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
 public class HeightSpriteSorter : MonoBehaviour

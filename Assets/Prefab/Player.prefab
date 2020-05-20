@@ -14,6 +14,9 @@ GameObject:
   - component: {fileID: 3512929477852423290}
   - component: {fileID: 3512929477852423291}
   - component: {fileID: 2774130504322627483}
+  - component: {fileID: 101889244066143558}
+  - component: {fileID: 3174291071987948954}
+  - component: {fileID: 2410428531924759167}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -73,7 +76,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1869988495
   m_SortingLayer: 1
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 21ae12909dfa64464820da55fc494021, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -101,6 +104,7 @@ MonoBehaviour:
   _maxHealth: 100
   _attackPower: 8
   _attackReach: 16
+  _attackCooldown: 8
   _movementSpeed: 4
 --- !u!114 &3512929477852423290
 MonoBehaviour:
@@ -130,7 +134,7 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3512929477852423291}
+      - m_Target: {fileID: 2410428531924759167}
         m_MethodName: Move
         m_Mode: 0
         m_Arguments:
@@ -143,9 +147,24 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: f9c797d3-5071-4464-ad56-bccb6dba5b7e
     m_ActionName: Movement/New action[/Keyboard/w]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2410428531924759167}
+        m_MethodName: Attack
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 24cd6b59-9e4a-4a7e-921f-9d84854e3909
+    m_ActionName: General/Attack[/Mouse/leftButton]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: Movement
+  m_DefaultActionMap: General
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!114 &3512929477852423291
@@ -162,8 +181,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementBlockingLayer:
     serializedVersion: 2
-    m_Bits: 0
-  MovementInput: {x: 0, y: 0}
+    m_Bits: 256
+  _movementInput: {x: 0, y: 0}
 --- !u!58 &2774130504322627483
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -177,6 +196,42 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.25}
+  m_Offset: {x: 0, y: -0.2}
   serializedVersion: 2
-  m_Radius: 0.6
+  m_Radius: 0.7
+--- !u!114 &101889244066143558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3512929477808354420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b86a9ba8a539f734d9d6a97ae1291162, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3174291071987948954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3512929477808354420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cf7174ce3ef12e439711d0d9ab625d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2410428531924759167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3512929477808354420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 909d63b6b1d82a3458cb43f4d94c0545, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

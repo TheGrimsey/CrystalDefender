@@ -2,7 +2,7 @@
     "name": "PlayerInput",
     "maps": [
         {
-            "name": "Movement",
+            "name": "General",
             "id": "aede93ca-c4ff-4a0f-90e9-d6765acfb9cd",
             "actions": [
                 {
@@ -10,6 +10,14 @@
                     "type": "Value",
                     "id": "f9c797d3-5071-4464-ad56-bccb6dba5b7e",
                     "expectedControlType": "Vector2",
+                    "processors": "NormalizeVector2",
+                    "interactions": ""
+                },
+                {
+                    "name": "Attack",
+                    "type": "Button",
+                    "id": "24cd6b59-9e4a-4a7e-921f-9d84854e3909",
+                    "expectedControlType": "Button",
                     "processors": "NormalizeVector2",
                     "interactions": ""
                 }
@@ -69,6 +77,17 @@
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "b8bc35b8-597b-47bf-824b-da171be42500",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

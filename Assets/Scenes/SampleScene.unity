@@ -986,9 +986,10 @@ GameObject:
   - component: {fileID: 1583138030}
   - component: {fileID: 1583138032}
   - component: {fileID: 1583138031}
+  - component: {fileID: 1583138029}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1008,6 +1009,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1583138029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1583138027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cf7174ce3ef12e439711d0d9ab625d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!195 &1583138030
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -8930,16 +8943,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2774130504322627483, guid: 2963857ffafba9246beb892d2db8c005,
-        type: 3}
-      propertyPath: m_Radius
-      value: 0.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 2774130504322627483, guid: 2963857ffafba9246beb892d2db8c005,
-        type: 3}
-      propertyPath: m_Offset.y
-      value: -0.2
-      objectReference: {fileID: 0}
     - target: {fileID: 3512929477808354420, guid: 2963857ffafba9246beb892d2db8c005,
         type: 3}
       propertyPath: m_Name
@@ -9000,38 +9003,27 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3512929477808354422, guid: 2963857ffafba9246beb892d2db8c005,
+    - target: {fileID: 3512929477852423290, guid: 2963857ffafba9246beb892d2db8c005,
         type: 3}
-      propertyPath: m_SortingOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3512929477808354422, guid: 2963857ffafba9246beb892d2db8c005,
+      propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3512929477852423289}
+    - target: {fileID: 3512929477852423290, guid: 2963857ffafba9246beb892d2db8c005,
         type: 3}
-      propertyPath: m_SpriteSortPoint
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3512929477852423291, guid: 2963857ffafba9246beb892d2db8c005,
-        type: 3}
-      propertyPath: movementBlockingLayer.m_Bits
-      value: 256
+      propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Move
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2963857ffafba9246beb892d2db8c005, type: 3}
---- !u!1 &3512929477852423289 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3512929477808354420, guid: 2963857ffafba9246beb892d2db8c005,
+--- !u!114 &3512929477852423289 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2410428531924759167, guid: 2963857ffafba9246beb892d2db8c005,
     type: 3}
   m_PrefabInstance: {fileID: 3512929477852423288}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3512929477852423290
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3512929477852423289}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b86a9ba8a539f734d9d6a97ae1291162, type: 3}
+  m_Script: {fileID: 11500000, guid: 909d63b6b1d82a3458cb43f4d94c0545, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

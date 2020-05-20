@@ -1,10 +1,13 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class StatsComponent : MonoBehaviour
 {
+    public delegate void OnDamagedDelegate(int damageTaken, GameObject Damager);
+    public event OnDamagedDelegate OnDamaged;
+
+    public delegate void OnHealtChangedDelegate(int newHealth);
+    public event OnHealtChangedDelegate OnHealthChanged;
+
     //Current Health
     [SerializeField]
     int _health;
@@ -22,12 +25,17 @@ public class StatsComponent : MonoBehaviour
 
     //How far we can reach when attacking (16 = 1 tile)
     [SerializeField]
-    int _attackReach = 16;
+    int _attackReach = 2;
     public int AttackReach => _attackReach;
 
-    //How fast we move (16 = 1 tile)
+    //Time between each attack.
     [SerializeField]
-    int _movementSpeed = 16;
+    int _attackCooldown = 1;
+    public int AttackCooldown => _attackCooldown;
+
+    //How fast we move expresserd in tile/s)
+    [SerializeField]
+    int _movementSpeed = 2;
     public int MovementSpeed => _movementSpeed;
 
     // Start is called before the first frame update
@@ -41,8 +49,11 @@ public class StatsComponent : MonoBehaviour
         _health = _maxHealth;
     }
 
-    public void Damage(int damage)
+    public void Damage(int damage, GameObject Damager)
     {
-        _health = Mathf.Clamp(Health - damage, 0, MaxHealth); 
+        _health = Mathf.Clamp(Health - damage, 0, MaxHealth);
+        
+        OnDamaged.Invoke(damage, Damager);
+        OnHealthChanged.Invoke(_health);
     }
 }

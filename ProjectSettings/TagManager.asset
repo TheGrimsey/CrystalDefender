@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Crystal
   - GameKeeper
+  - Enemy
   layers:
   - Default
   - TransparentFX

@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
@@ -33,6 +32,7 @@ public class AI : MonoBehaviour
         _gameKeeper = GameKeeper.Get();
 
         _statsComponent = GetComponent<StatsComponent>();
+        _statsComponent.OnDamaged += OnDamaged;
 
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _navMeshAgent.updateRotation = false;
@@ -55,8 +55,8 @@ public class AI : MonoBehaviour
 
         //Go to Threat target.
         _navMeshAgent.SetDestination(Target.transform.position);
-        
     }
+    
     GameObject GetTarget()
     {
         return Threat.Count > 0 ? Threat[0].Target : null;
@@ -66,6 +66,7 @@ public class AI : MonoBehaviour
     {
         Threat.Sort((x, y) => y.Threat.CompareTo(x.Threat));
     }
+
     public void AddThreat(float Amount, GameObject Target)
     {
         bool FoundTarget = false;
@@ -74,7 +75,7 @@ public class AI : MonoBehaviour
         {
             if (Target == Threat[i].Target)
             {
-                Threat[i] = new ThreatTarget(Threat[i].Threat, Target);
+                Threat[i] = new ThreatTarget(Threat[i].Threat + Amount, Target);
                 FoundTarget = true;
                 break;
             }
@@ -85,6 +86,12 @@ public class AI : MonoBehaviour
             Threat.Add(new ThreatTarget(Amount, Target));
         }
 
+        //Sort threat so we attack the most threatening target next time.
         SortThreat();
+    }
+
+    void OnDamaged(int Damage, GameObject Damager)
+    {
+        AddThreat(Damage, Damager);
     }
 }
