@@ -15,21 +15,28 @@ struct ThreatTarget
     }
 }
 
+[RequireComponent(typeof(CombatComponent))]
 [RequireComponent(typeof(StatsComponent))]
 [RequireComponent(typeof(NavMeshAgent))]
 public class AI : MonoBehaviour
 {
     GameKeeper _gameKeeper;
 
+    CombatComponent _combatComponent;
     StatsComponent _statsComponent;
     NavMeshAgent _navMeshAgent;
 
-    List<ThreatTarget> Threat;
+    List<ThreatTarget> _threat;
+    [SerializeField]
+    GameObject _target;
 
     // Start is called before the first frame update
     void Start()
     {
         _gameKeeper = GameKeeper.Get();
+
+        //Cache our combat component.
+        _combatComponent = GetComponent<CombatComponent>();
 
         //Cache our statsComponent & register damaged event.
         _statsComponent = GetComponent<StatsComponent>();
@@ -41,50 +48,78 @@ public class AI : MonoBehaviour
         _navMeshAgent.updateRotation = false;
         _navMeshAgent.updateUpAxis = false;
 
+        //Set speed & stopping distance based on our stats.
         _navMeshAgent.speed = _statsComponent.MovementSpeed;
-        _navMeshAgent.stoppingDistance = _statsComponent.AttackReach * 0.9f;
+        _navMeshAgent.stoppingDistance = _statsComponent.AttackReach * 0.95f;
 
-        Threat = new List<ThreatTarget>();
+        _threat = new List<ThreatTarget>();
+        _target = null;
 
         //Add default threat to Crystal so enemies have somewhere they want to go from the start.
-        Threat.Add(new ThreatTarget(1f, _gameKeeper.Crystal));
+        _threat.Add(new ThreatTarget(1f, _gameKeeper.Crystal));
     }
 
     // Update is called once per frame
     void Update()
     {
-        GameObject Target = GetTarget();
+        _target = GetTarget();
 
-        if (Target == null)
+        if (_target == null)
             return;
 
-        //Go to Threat target.
-        _navMeshAgent.SetDestination(Target.transform.position);
+        //Turn towards target.
+        Vector2 faceDirection;
 
-        Vector2 direction = (_navMeshAgent.pathEndPosition - transform.position);
-        Vector2 faceDirection = new Vector2(direction.x, direction.y).normalized;
-        _statsComponent.FaceDirection = faceDirection;
+        //Check if we are out of range of target. If we are set destination.
+        if (Vector2.Distance(transform.position, _target.transform.position) >= _navMeshAgent.stoppingDistance)
+        {
+            //Go to Threat target.
+            _navMeshAgent.SetDestination(_target.transform.position);
+            _navMeshAgent.isStopped = false;
+
+            //Face next walk point.
+            faceDirection = (_navMeshAgent.steeringTarget - transform.position);
+        }
+        else
+        {
+            _navMeshAgent.isStopped = true;
+
+            //Face target.
+            faceDirection = (_target.transform.position - transform.position);
+        }
+
+        _statsComponent.FaceDirection = faceDirection.normalized;
+
+        //This is true if we are in reach.
+        if(_navMeshAgent.isStopped)
+        {
+            //Attack target.
+            if(_combatComponent.AttackTarget(_target))
+            {
+                Debug.Log("Attacking " + _target.name);
+            }
+        }
     }
     
     GameObject GetTarget()
     {
-        return Threat.Count > 0 ? Threat[0].Target : null;
+        return _threat.Count > 0 ? _threat[0].Target : null;
     }
 
     void SortThreat()
     {
-        Threat.Sort((x, y) => y.Threat.CompareTo(x.Threat));
+        _threat.Sort((x, y) => y.Threat.CompareTo(x.Threat));
     }
 
     public void AddThreat(float Amount, GameObject Target)
     {
         bool FoundTarget = false;
 
-        for(int i = 0; i < Threat.Count(); i++)
+        for(int i = 0; i < _threat.Count(); i++)
         {
-            if (Target == Threat[i].Target)
+            if (Target == _threat[i].Target)
             {
-                Threat[i] = new ThreatTarget(Threat[i].Threat + Amount, Target);
+                _threat[i] = new ThreatTarget(_threat[i].Threat + Amount, Target);
                 FoundTarget = true;
                 break;
             }
@@ -92,7 +127,7 @@ public class AI : MonoBehaviour
 
         if (!FoundTarget)
         {
-            Threat.Add(new ThreatTarget(Amount, Target));
+            _threat.Add(new ThreatTarget(Amount, Target));
         }
 
         //Sort threat so we attack the most threatening target next time.

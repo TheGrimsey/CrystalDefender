@@ -6,6 +6,7 @@ public class CombatComponent : MonoBehaviour
 {
     StatsComponent _statsComponent;
 
+    [SerializeField]
     float _lastAttackTime = float.MinValue;
 
     // Start is called before the first frame update
@@ -14,20 +15,29 @@ public class CombatComponent : MonoBehaviour
         _statsComponent = GetComponent<StatsComponent>();
     }
 
-    public void AttackTarget(GameObject Target)
+    public bool AttackInfrontOfCharacter()
+    {
+        //TODO Raycast in FaceDirection. Then AttackTarget();
+
+        return false;
+    }
+
+    public bool AttackTarget(GameObject Target)
     {
         if (!CanAttack())
-            return;
+            return false;
 
         StatsComponent TargetStats = Target.GetComponent<StatsComponent>();
         
         if (TargetStats == null)
-            return;
+            return false;
 
-        TargetStats.Damage(_statsComponent.AttackPower, this.gameObject);
+        TargetStats.Damage(_statsComponent.AttackPower, gameObject);
 
         //Update attack time.
         _lastAttackTime = Time.time;
+
+        return true;
     }
 
     bool CanAttack()

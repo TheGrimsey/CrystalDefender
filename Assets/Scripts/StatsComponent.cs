@@ -79,7 +79,10 @@ public class StatsComponent : MonoBehaviour
     {
         _health = Mathf.Clamp(Health - damage, 0, MaxHealth);
         
-        OnDamaged.Invoke(damage, Damager);
-        OnHealthChanged.Invoke(_health);
+        if(OnDamaged != null)
+            OnDamaged.Invoke(damage, Damager);
+
+        if(OnHealthChanged != null)
+            OnHealthChanged.Invoke(_health);
     }
 }
