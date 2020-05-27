@@ -1,6 +1,12 @@
 ﻿using System;
 using UnityEngine;
 
+public enum ETeam
+{
+    Friendly,
+    Enemy
+}
+
 public class StatsComponent : MonoBehaviour
 {
     public delegate void OnDamagedDelegate(int damageTaken, GameObject Damager);
@@ -8,6 +14,18 @@ public class StatsComponent : MonoBehaviour
 
     public delegate void OnHealtChangedDelegate(int newHealth);
     public event OnHealtChangedDelegate OnHealthChanged;
+
+    [SerializeField]
+    ETeam _team = ETeam.Friendly;
+    public ETeam Team => _team;
+
+    [SerializeField]
+    bool _isMoving;
+    public bool IsMoving
+    {
+        get { return _isMoving; }
+        set { _isMoving = value; }
+    }
 
     //Keep track of which direction we are facing.
     [SerializeField]

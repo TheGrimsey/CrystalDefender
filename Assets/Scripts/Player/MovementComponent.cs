@@ -54,6 +54,8 @@ public class MovementComponent : MonoBehaviour
 
             _statsComponent.FaceDirection = MovementInput;
         }
+
+        _statsComponent.IsMoving = MovementInput != Vector2.zero;
     }
     
     //Attempts to move the character by translation checking collision for that position on the movementBlockingLayer.

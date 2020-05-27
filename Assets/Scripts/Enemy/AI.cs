@@ -56,7 +56,7 @@ public class AI : MonoBehaviour
         _target = null;
 
         //Add default threat to Crystal so enemies have somewhere they want to go from the start.
-        _threat.Add(new ThreatTarget(1f, _gameKeeper.Crystal));
+        _threat.Add(new ThreatTarget(10f, _gameKeeper.Crystal));
     }
 
     // Update is called once per frame
@@ -88,7 +88,10 @@ public class AI : MonoBehaviour
             faceDirection = (_target.transform.position - transform.position);
         }
 
+        transform.position = new Vector3(transform.position.x, transform.position.y, 0f);
+
         _statsComponent.FaceDirection = faceDirection.normalized;
+        _statsComponent.IsMoving = _navMeshAgent.isStopped;
 
         //This is true if we are in reach.
         if(_navMeshAgent.isStopped)

@@ -22,6 +22,6 @@ public class PlayerInput : MonoBehaviour
 
     public void Attack(InputAction.CallbackContext context)
     {
-        //TODO
+        _combatComponent.AttackInfrontOfCharacter();
     }
 }
