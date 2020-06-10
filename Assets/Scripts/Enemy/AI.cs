@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
@@ -41,6 +42,7 @@ public class AI : MonoBehaviour
         //Cache our statsComponent & register damaged event.
         _statsComponent = GetComponent<StatsComponent>();
         _statsComponent.OnDamaged += OnDamaged;
+        _statsComponent.OnHealthChanged += OnHealthChanged;
 
         //Set up NavMesh agent.
         _navMeshAgent = GetComponent<NavMeshAgent>();
@@ -143,5 +145,10 @@ public class AI : MonoBehaviour
             return;
 
         AddThreat(Damage, Damager);
+    }
+    private void OnHealthChanged(int newHealth)
+    {
+        if (newHealth <= 0)
+            Destroy(gameObject);
     }
 }

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2448570417518283547}
   - component: {fileID: 2448570417518283548}
   - component: {fileID: 3910513602165427089}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -129,7 +129,7 @@ GameObject:
   - component: {fileID: 2448570418008461181}
   - component: {fileID: 2721528272637243530}
   - component: {fileID: 5099300050039487126}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -272,6 +272,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: HealthBar
       objectReference: {fileID: 0}
+    - target: {fileID: 486517072454051676, guid: 3790d34bd3b4e474aa098f7623b46816,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 962237042276924116, guid: 3790d34bd3b4e474aa098f7623b46816,
         type: 3}
       propertyPath: _statsComponent
@@ -292,6 +297,16 @@ PrefabInstance:
       propertyPath: _statsComponent
       value: 
       objectReference: {fileID: 2448570418008461152}
+    - target: {fileID: 2978112715065724123, guid: 3790d34bd3b4e474aa098f7623b46816,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3989858623731509233, guid: 3790d34bd3b4e474aa098f7623b46816,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 7821730943225857906, guid: 3790d34bd3b4e474aa098f7623b46816,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -396,6 +411,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9171233737256030406, guid: 3790d34bd3b4e474aa098f7623b46816,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3790d34bd3b4e474aa098f7623b46816, type: 3}

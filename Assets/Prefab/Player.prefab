@@ -19,7 +19,8 @@ GameObject:
   - component: {fileID: 2410428531924759167}
   - component: {fileID: 1306364657586497015}
   - component: {fileID: 2729869664913717319}
-  m_Layer: 0
+  - component: {fileID: 348773556059861080}
+  m_Layer: 9
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -112,7 +113,7 @@ MonoBehaviour:
   _faceDirection: {x: 0, y: 0}
   _health: 0
   _maxHealth: 100
-  _attackPower: 4
+  _attackPower: 8
   _attackReach: 16
   _attackCooldown: 1
   _movementSpeed: 4
@@ -172,6 +173,21 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 24cd6b59-9e4a-4a7e-921f-9d84854e3909
     m_ActionName: General/Attack[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2410428531924759167}
+        m_MethodName: PlaceTrap
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 3a9de863-cb5a-43d2-ad08-c21fb9655b17
+    m_ActionName: General/PlaceTrap[/Keyboard/1]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: General
@@ -278,3 +294,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 1306364657586497015}
+--- !u!114 &348773556059861080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3512929477808354420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb907b6982688ac4a955fff809e8c888, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _traps:
+  - {fileID: 3651594062211034251, guid: 6174ded05ca8a5e40ad9d7701e440aeb, type: 3}
