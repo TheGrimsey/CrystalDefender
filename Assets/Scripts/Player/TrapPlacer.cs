@@ -9,6 +9,9 @@ public class TrapPlacer : MonoBehaviour
     [SerializeField]
     List<GameObject> _traps;
 
+    [SerializeField]
+    int _selectedTrap = 0;
+
     StatsComponent _statsComponent;
 
     // Start is called before the first frame update
@@ -24,6 +27,6 @@ public class TrapPlacer : MonoBehaviour
 
         Vector2 SpawnPosition = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y) + _statsComponent.FaceDirection;
 
-        GameObject Trap = Instantiate<GameObject>(_traps[0], SpawnPosition, Quaternion.identity);
+        GameObject Trap = Instantiate<GameObject>(_traps[_selectedTrap], SpawnPosition, Quaternion.identity);
     }
 }

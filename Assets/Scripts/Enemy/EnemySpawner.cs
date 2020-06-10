@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
+    GameKeeper _gameKeeper;
+
     [Header("Spawn Properties")]
     [SerializeField]
     List<GameObject> _enemiesToSpawn;
@@ -18,9 +20,6 @@ public class EnemySpawner : MonoBehaviour
 
     [Header("Round Properties")]
     [SerializeField]
-    int _round = 0;
-
-    [SerializeField]
     float _baseTimeBetweenRounds = 30f;
 
     [SerializeField]
@@ -31,6 +30,8 @@ public class EnemySpawner : MonoBehaviour
 
     void Start()
     {
+        _gameKeeper = GameKeeper.Get();
+
         _nextSpawnTime = Time.time + _preparationTime;    
     }
 
@@ -39,7 +40,7 @@ public class EnemySpawner : MonoBehaviour
     {
         if(Time.time >= _nextSpawnTime)
         {
-            _round++;
+            _gameKeeper.IncrementRound();
 
             Spawn();
 
@@ -49,12 +50,12 @@ public class EnemySpawner : MonoBehaviour
 
     private void Spawn()
     {
-        Random.InitState(_round);
+        Random.InitState(_gameKeeper.Round);
 
         int mobsToSpawn = Random.Range(_minMobsToSpawn, _maxMobsToSpawn);
         for(int i = 0; i < mobsToSpawn; i++)
         {
-            Random.InitState(_round * (i + 1));
+            Random.InitState(_gameKeeper.Round * (i + 1));
 
             GameObject enemyToSpawn = _enemiesToSpawn[Random.Range(0, _enemiesToSpawn.Count - 1)];
 
