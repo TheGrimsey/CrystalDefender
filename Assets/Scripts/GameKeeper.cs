@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameKeeper : MonoBehaviour
 {
@@ -6,8 +7,13 @@ public class GameKeeper : MonoBehaviour
     GameObject _crystal;
     public GameObject Crystal => _crystal;
 
+    public delegate void OnRoundChangedDelegate();
+    public event OnRoundChangedDelegate OnRoundChanged;
+
+    [SerializeField]
     int _round;
     public int Round => _round;
+
     public void IncrementRound() 
     { 
         _round++;
@@ -23,8 +29,10 @@ public class GameKeeper : MonoBehaviour
             OnRoundChanged.Invoke();
     }
 
-    public delegate void OnRoundChangedDelegate();
-    public event OnRoundChangedDelegate OnRoundChanged;
+    public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
 
     public static GameKeeper Get()
     {

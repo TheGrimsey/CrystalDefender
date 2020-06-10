@@ -77,6 +77,11 @@ public class StatsComponent : MonoBehaviour
     int _attackCooldown = 1;
     public int AttackCooldown => _attackCooldown;
 
+    //Time between each attack.
+    [SerializeField]
+    int _trapCooldown = 4;
+    public int TrapCooldown => _trapCooldown;
+
     //How fast we move expresserd in tile/s)
     [SerializeField]
     int _movementSpeed = 2;

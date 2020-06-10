@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3651594062211034249}
   - component: {fileID: 3651594062211034248}
   - component: {fileID: 3651594062211034247}
+  - component: {fileID: 6966357803185576289}
   m_Layer: 8
   m_Name: Crystal
   m_TagString: Crystal
@@ -119,4 +120,17 @@ MonoBehaviour:
   _attackPower: 0
   _attackReach: 0
   _attackCooldown: 0
+  _trapCooldown: 1
   _movementSpeed: 0
+--- !u!114 &6966357803185576289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3651594062211034251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfb19838000de4a4eb9f39961a0a11b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

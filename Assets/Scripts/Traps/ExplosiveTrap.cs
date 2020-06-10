@@ -53,7 +53,7 @@ public class ExplosiveTrap : MonoBehaviour
                 }
 
                 Debug.Log("Dealing " + damageMultiplier * _explosionDamage + " damage to " + collider.gameObject.name);
-                statsComponent.Damage((int)(_explosionDamage * damageMultiplier), gameObject);
+                statsComponent.Damage((int)(_explosionDamage * damageMultiplier), null);
             }
         }
 

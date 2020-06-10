@@ -4,14 +4,15 @@ using UnityEngine;
 [RequireComponent(typeof(StatsComponent))]
 public class CombatComponent : MonoBehaviour
 {
-    StatsComponent _statsComponent;
-
     [SerializeField]
-    float _lastAttackTime = float.MinValue;
+    float _lastAttackTime;
 
+    StatsComponent _statsComponent;
     // Start is called before the first frame update
     void Start()
     {
+        _lastAttackTime = float.MinValue;
+
         _statsComponent = GetComponent<StatsComponent>();
     }
 

@@ -848,9 +848,9 @@ MonoBehaviour:
   _enemiesToSpawn:
   - {fileID: 2448570418008461179, guid: ed9724945fd52c74faee0b9d0e6aa46c, type: 3}
   _minMobsToSpawn: 3
-  _maxMobsToSpawn: 7
-  _spawnRadius: 5
-  _baseTimeBetweenRounds: 30
+  _maxMobsToSpawn: 8
+  _spawnRadius: 6
+  _baseTimeBetweenRounds: 20
   _preparationTime: 5
   _nextSpawnTime: 0
 --- !u!4 &568952753
@@ -909,6 +909,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _crystal: {fileID: 1761707748}
+  _round: 0
 --- !u!4 &1264682162
 Transform:
   m_ObjectHideFlags: 0
@@ -1087,7 +1088,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f1545cd422579cf4a8d033c19206be2e, type: 2}
+  - {fileID: 2100000, guid: 3b5647243142f8a49a36b40494ba4bed, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8844,6 +8845,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2340506006534885246, guid: ff8be0846e6d4d74587abb38e4fda025,
         type: 3}
+    - target: {fileID: 1055676637362353224, guid: 2963857ffafba9246beb892d2db8c005,
+        type: 3}
+      propertyPath: _trapCooldown
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1055676637362353224, guid: 2963857ffafba9246beb892d2db8c005,
+        type: 3}
+      propertyPath: _attackReach
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1055676637362353224, guid: 2963857ffafba9246beb892d2db8c005,
+        type: 3}
+      propertyPath: _attackPower
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 2774130504322627483, guid: 2963857ffafba9246beb892d2db8c005,
         type: 3}
       propertyPath: m_IsTrigger
