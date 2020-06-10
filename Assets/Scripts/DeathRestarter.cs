@@ -4,22 +4,25 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /*
- * Restarts the game when this character reaches 0 health.
+ * DEATH RESTARTER
+ * Restarts the game when this character dies.
  */
 [RequireComponent(typeof(StatsComponent))]
 public class DeathRestarter : MonoBehaviour
 {
-    GameKeeper _gameKeeper;
-
     void Start()
     {
-        _gameKeeper = GameKeeper.Get();
-
+        //We don't need to cache the components since we only ever use them once.
+        
+        //Register to health change event.
         GetComponent<StatsComponent>().OnHealthChanged += OnHealthChanged;
     }
+
+    //Called when Health is Changed.
     void OnHealthChanged(int newHealth)
     {
+        //If we are dead then restart the game.
         if (newHealth <= 0)
-            _gameKeeper.Restart();
+            GameKeeper.Get().Restart();
     }
 }

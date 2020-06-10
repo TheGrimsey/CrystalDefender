@@ -1,12 +1,20 @@
 ﻿using System;
 using UnityEngine;
 
+/*
+ * ETEAM
+ * Enum used to identify which team a character is on.
+ */
 public enum ETeam
 {
     Friendly,
     Enemy
 }
 
+/*
+ * STATS COMPONENT
+ * Holds all stats used by characters such as health, speed, attack, etc.
+ */
 public class StatsComponent : MonoBehaviour
 {
     public delegate void OnDamagedDelegate(int damageTaken, GameObject Damager);
@@ -90,22 +98,21 @@ public class StatsComponent : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ResetHealth(); 
-    }
-
-    public void ResetHealth()
-    {
         _health = _maxHealth;
     }
 
+    //Handles what happens when we take damage.
     public void Damage(int damage, GameObject Damager)
     {
+        //Clamp health between MaxHealth & 0.
         _health = Mathf.Clamp(Health - damage, 0, MaxHealth);
         
+        //Invoke OnDamaged event.
         if(OnDamaged != null)
             OnDamaged.Invoke(damage, Damager);
 
-        if(OnHealthChanged != null)
+        //Invoke OnHealthChanged event.
+        if (OnHealthChanged != null)
             OnHealthChanged.Invoke(_health);
     }
 }

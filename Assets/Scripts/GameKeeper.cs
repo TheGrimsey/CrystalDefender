@@ -12,13 +12,13 @@ public class GameKeeper : MonoBehaviour
     GameObject _crystal;
     public GameObject Crystal => _crystal;
 
-    public delegate void OnRoundChangedDelegate();
-    public event OnRoundChangedDelegate OnRoundChanged;
-
     //Current round.
     [SerializeField]
     int _round;
     public int Round => _round;
+
+    public delegate void OnRoundChangedDelegate();
+    public event OnRoundChangedDelegate OnRoundChanged;
 
     //Increments the round and invokes OnRoundChangedEvent
     public void IncrementRound() 
