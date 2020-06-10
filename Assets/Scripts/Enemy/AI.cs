@@ -4,6 +4,10 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
+/*
+ * THREAT TARGET
+ * Holds current threatlevel of an object.
+ */
 struct ThreatTarget
 {
     public float Threat;
@@ -16,18 +20,27 @@ struct ThreatTarget
     }
 }
 
+/*
+ * AI
+ * Handles Enemy AI.
+ */
 [RequireComponent(typeof(CombatComponent))]
 [RequireComponent(typeof(StatsComponent))]
 [RequireComponent(typeof(NavMeshAgent))]
 public class AI : MonoBehaviour
 {
+    //CACHED GameKeeper
     GameKeeper _gameKeeper;
-
+    
+    //Cached components.
     CombatComponent _combatComponent;
     StatsComponent _statsComponent;
     NavMeshAgent _navMeshAgent;
 
+    //List of all targets and their threat level.
     List<ThreatTarget> _threat;
+
+    //Current target.
     [SerializeField]
     GameObject _target;
 
@@ -44,7 +57,7 @@ public class AI : MonoBehaviour
         _statsComponent.OnDamaged += OnDamaged;
         _statsComponent.OnHealthChanged += OnHealthChanged;
 
-        //Set up NavMesh agent.
+        //Cache & set up NavMesh agent.
         _navMeshAgent = GetComponent<NavMeshAgent>();
         //Set this so we don't rotate.
         _navMeshAgent.updateRotation = false;
@@ -54,6 +67,7 @@ public class AI : MonoBehaviour
         _navMeshAgent.speed = _statsComponent.MovementSpeed;
         _navMeshAgent.stoppingDistance = _statsComponent.AttackReach * 0.95f;
 
+        //Threat set up.
         _threat = new List<ThreatTarget>();
         _target = null;
 
@@ -64,13 +78,12 @@ public class AI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Set our target to object with most threat.
         _target = GetTarget();
 
+        //Do nothing if we have no target.
         if (_target == null)
             return;
-
-        //Turn towards target.
-        Vector2 faceDirection;
 
         //Check if we are out of range of target. If we are set destination.
         if (Vector2.Distance(transform.position, _target.transform.position) >= _navMeshAgent.stoppingDistance)
@@ -80,19 +93,21 @@ public class AI : MonoBehaviour
             _navMeshAgent.isStopped = false;
 
             //Face next walk point.
-            faceDirection = (_navMeshAgent.steeringTarget - transform.position);
+            _statsComponent.FaceDirection = (_navMeshAgent.steeringTarget - transform.position).normalized;
         }
         else
         {
+            //Stop agent movement.
             _navMeshAgent.isStopped = true;
 
             //Face target.
-            faceDirection = (_target.transform.position - transform.position);
+            _statsComponent.FaceDirection = (_target.transform.position - transform.position).normalized;
         }
 
+        //Make sure we stay at Z=0.
         transform.position = new Vector3(transform.position.x, transform.position.y, 0f);
 
-        _statsComponent.FaceDirection = faceDirection.normalized;
+        //If the agent isn't stopped then we are moving.
         _statsComponent.IsMoving = _navMeshAgent.isStopped;
 
         //This is true if we are in reach.
@@ -106,24 +121,29 @@ public class AI : MonoBehaviour
         }
     }
     
+    //Returns our most threatening target. Requires threat to be sorted to be accurate.
     GameObject GetTarget()
     {
         return _threat.Count > 0 ? _threat[0].Target : null;
     }
 
+    //Sorts targets based on threat.
     void SortThreat()
     {
-        _threat.Sort((x, y) => y.Threat.CompareTo(x.Threat));
+        _threat.Sort((first, second) => second.Threat.CompareTo(first.Threat));
     }
 
+    //Adds threat for object.
     public void AddThreat(float Amount, GameObject Target)
     {
         bool FoundTarget = false;
 
+        //Try to find target in threat list.
         for(int i = 0; i < _threat.Count(); i++)
         {
             if (Target == _threat[i].Target)
             {
+                //If it exists update it's threat.
                 _threat[i] = new ThreatTarget(_threat[i].Threat + Amount, Target);
                 FoundTarget = true;
                 break;
@@ -144,10 +164,12 @@ public class AI : MonoBehaviour
         if (Damager == null)
             return;
 
+        //Add threat equal to the damage.
         AddThreat(Damage, Damager);
     }
-    private void OnHealthChanged(int newHealth)
+    void OnHealthChanged(int newHealth)
     {
+        //Destroy this character if our health is 0 (because we are dead)
         if (newHealth <= 0)
             Destroy(gameObject);
     }

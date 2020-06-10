@@ -3,34 +3,44 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * EXPLOSIVE TRAP
+ * A trap that explodes dealing damage in a radius when stepped on.
+ */
 public class ExplosiveTrap : MonoBehaviour
 {
+    //Radius to deal damage within.
     [SerializeField]
     float _explosionRadius = 3f;
 
+    //Damage to deal to hit enemies.
     [SerializeField]
     int _explosionDamage = 50;
 
+    //Wether or not to do distance falloff reducing damage dealt based on how far the enemy is away from the explosive.
     [SerializeField]
     bool _distanceFalloff = false;
 
+    //Called when anyone enters the trigger.
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Trigger entered.");
-
+        //Get other's stats component.
         StatsComponent otherStats = other.gameObject.GetComponent<StatsComponent>();
         
+        //Check so it has a stats component.
         if(otherStats != null)
         {
+            //Check if it is an enemy.
             if (otherStats.Team == ETeam.Enemy)
             {
-                Debug.Log("Trigger exploding.");
+                //Blow up.
                 Explode();
             }
         }
     }
 
-    private void Explode()
+    // Blows up the trap dealing damage to everyone within radius and destroying the trap.
+    void Explode()
     {
         List<Collider2D> results = new List<Collider2D>();
         Physics2D.queriesHitTriggers = true;

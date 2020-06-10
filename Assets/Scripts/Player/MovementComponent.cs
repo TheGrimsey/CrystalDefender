@@ -1,15 +1,22 @@
 ﻿using UnityEngine;
 
+/*
+ * MOVEMENT COMPONENT
+ * Handles player movement.
+ */
 [RequireComponent(typeof(StatsComponent))]
 [RequireComponent(typeof(CircleCollider2D))]
 public class MovementComponent : MonoBehaviour
 {
-    [SerializeField]
-    private LayerMask movementBlockingLayer;
-
+    //CACHED Components.
     StatsComponent _statsComponent;
     CircleCollider2D _circleCollider2D;
 
+    //Collision layer that stops movement.
+    [SerializeField]
+    LayerMask movementBlockingLayer;
+
+    //Current movement input taken from player input.
     [SerializeField]
     Vector2 _movementInput;
     public Vector2 MovementInput
@@ -21,6 +28,7 @@ public class MovementComponent : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Cache components.
         _statsComponent = GetComponent<StatsComponent>();
         _circleCollider2D = GetComponent<CircleCollider2D>();
     }
@@ -28,33 +36,34 @@ public class MovementComponent : MonoBehaviour
     // FixedUpdate is called on a fixed timer.
     void FixedUpdate()
     {        
-        
         //Make sure the player wants to move before we do any expensive calculations.
         if (MovementInput != Vector2.zero)
         {
             //Amount to move this frame.
             float MovementAmount = _statsComponent.MovementSpeed * Time.fixedDeltaTime;
 
-            Vector3 movementDistance = MovementInput * MovementAmount;
+            //Movement amount given direction from player input.
+            Vector3 movementVector = MovementInput * MovementAmount;
 
             //Try to move normally. If that fails try each axis individually (we do this so that the player still can move even if it is a tiny bit into the wall of one direction)
-            if (!TryToMove(movementDistance))
+            if (!TryToMove(movementVector))
             {
                 //If that failed let's try to move only in the horizontal vector.
-                movementDistance = new Vector3(MovementInput.x * MovementAmount, 0, 0);
+                movementVector = new Vector3(MovementInput.x * MovementAmount, 0, 0);
 
-                if (!TryToMove(movementDistance))
+                if (!TryToMove(movementVector))
                 {
                     //If that failed then just vertically.
-                    movementDistance = new Vector3(0, MovementInput.y * MovementAmount, 0);
+                    movementVector = new Vector3(0, MovementInput.y * MovementAmount, 0);
 
-                    TryToMove(movementDistance);
+                    TryToMove(movementVector);
                 }
             }
 
             _statsComponent.FaceDirection = MovementInput;
         }
 
+        //If we have player input then we are moving.
         _statsComponent.IsMoving = MovementInput != Vector2.zero;
     }
     

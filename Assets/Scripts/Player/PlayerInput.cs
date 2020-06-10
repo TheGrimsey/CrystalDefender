@@ -1,11 +1,16 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
+/*
+ * PLAYER INPUT
+ * Handles player input.
+ */
 [RequireComponent(typeof(MovementComponent))]
 [RequireComponent(typeof(CombatComponent))]
 [RequireComponent(typeof(TrapPlacer))]
 public class PlayerInput : MonoBehaviour
 {
+    //CACHED components.
     MovementComponent _movementComponent;
     CombatComponent _combatComponent;
     TrapPlacer _trapPlacer;
@@ -13,6 +18,7 @@ public class PlayerInput : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Cache components.
         _movementComponent = GetComponent<MovementComponent>();
         _combatComponent = GetComponent<CombatComponent>();
         _trapPlacer = GetComponent<TrapPlacer>();
